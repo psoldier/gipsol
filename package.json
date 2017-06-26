@@ -23,6 +23,7 @@
     "react": "16.0.0-alpha.6",
     "react-native": "^0.44.0",
     "react-native-progress-bar": "^0.1.2",
-    "react-native-router-flux": "^3.38.0"
+    "react-native-router-flux": "^3.38.0",
+    "react-native-snap-carousel": "^2.3.0"
   }
 }
