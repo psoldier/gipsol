@@ -5,9 +5,9 @@ import Carousel from 'react-native-snap-carousel';
 
 export default class Category extends Component {
   render () {
-    const slides = [{title: 'Energía Renovable'},{title: 'Transporte'}].map((entry, index) => {
+    const slides = [{title: 'Energías Renovables'},{title: 'Transporte'}].map((entry, index) => {
       return (
-        <TouchableHighlight key={`entry-${index}`} style={styles.carousel} onPress={Actions.Question} underlayColor="slateblue">
+        <TouchableHighlight key={`entry-${index}`} style={styles.carousel} onPress={()=>Actions.Question({ title: entry.title })} underlayColor="slateblue">
           <Text>{ entry.title }</Text>
         </TouchableHighlight>
       );

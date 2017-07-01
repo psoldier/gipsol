@@ -33,7 +33,7 @@ class RenderQuestion extends Component {
 export default class Question extends Component {
   render() {
     return (
-      <RenderQuestion question='¿Cuál de las siguientes fuentes de energía no es renovable?' 
+      <RenderQuestion question='¿Cuál de las siguientes fuentes de energías no es renovable?' 
         answerdA='HIDRÁULICA' 
         answerdB='SOLAR' 
         answerdC='EÓLICA' 
@@ -50,7 +50,8 @@ const styles = StyleSheet.create({
     flex: 2,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'powderblue',
+    backgroundColor: 'white',
+    padding: 10
   },
   answerdContainer: {
     flex: 1,
