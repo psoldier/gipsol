@@ -18,3 +18,5 @@ export default class GipsolApp extends Component {
     )
   }
 }
+
+console.ignoredYellowBox = ['Warning: BackAndroid']
