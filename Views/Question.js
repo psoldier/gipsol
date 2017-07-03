@@ -29,17 +29,18 @@ export default class Question extends Component {
     text: ''
   }
 
-  _addPoint(){
+  /*_addPoint(){
     try {
       total = this._getPoints() + 1;
       AsyncStorage.setItem('@Categorias:renovables', total);
     } catch (error) {
       // Error saving data
     }
-  }
+  }*/
 
   _getPoints(){
     return 12;
+  }
     /*try {
       const value = AsyncStorage.getItem('@Categorias:renovables');
       if (value !== null){
@@ -50,37 +51,19 @@ export default class Question extends Component {
     } catch (error) {
       // Error retrieving data
     }*/
-  }
-
-
-  setModalVisible(result) {
-    if(result){
-      backgroudColor = '#41D01D';
-      text = 'Correcto!';
-      this._addPoint();
-    }else{
-      backgroudColor = '#F80A0A';
-      text = 'Incorrecto!';
-    }
-    this.setState({
-      modalVisible: true,
-      backgroudColor: backgroudColor,
-      text: text
-    });
-  }
 
   _hideModalVisible(){
   //Si todavia tiene vidas =>Reload de la siguiente pregunta
   //Si se quedó sin vidas => volver a Categorías poniendo el puntaje historico
-    this.setState({
-      modalVisible: false,
-      backgroudColor: '#41D01D',
-      text: ''
-    });
+    this.setState({modalVisible: false});
   }
 
  _onPressButton(result){
-    this.setModalVisible(result);
+    this.setState({
+      modalVisible: true,
+      backgroudColor: (result) ? '#41D01D' : '#F80A0A',
+      text: (result) ? 'Correcto!' : 'Incorrecto!'
+    });
   }
 
   render() {
