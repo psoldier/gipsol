@@ -22,35 +22,29 @@ class RenderAnswerd extends Component {
   }
 }
 
+class BoardCounter extends Component {
+  render() {
+    return(
+      <View>
+        <View style={styles.counterContainer}>
+          <Text style={styles.counterText}>{this.props.score}</Text>
+        </View>
+        <View style={styles.counterContainer}>
+          <Text style={styles.counterText}>{this.props.lifes}</Text>
+        </View>
+      </View>
+    );
+  }
+}
+
 export default class Question extends Component {
   state = {
     modalVisible: false,
     backgroudColor: '#41D01D',
-    text: ''
+    text: '',
+    score: 0,
+    lifes: 3
   }
-
-  /*_addPoint(){
-    try {
-      total = this._getPoints() + 1;
-      AsyncStorage.setItem('@Categorias:renovables', total);
-    } catch (error) {
-      // Error saving data
-    }
-  }*/
-
-  _getPoints(){
-    return 12;
-  }
-    /*try {
-      const value = AsyncStorage.getItem('@Categorias:renovables');
-      if (value !== null){
-        return value;
-      }else{
-        return 0;
-      }
-    } catch (error) {
-      // Error retrieving data
-    }*/
 
   _hideModalVisible(){
   //Si todavia tiene vidas =>Reload de la siguiente pregunta
@@ -61,13 +55,14 @@ export default class Question extends Component {
  _onPressButton(result){
     this.setState({
       modalVisible: true,
-      backgroudColor: (result) ? '#41D01D' : '#F80A0A',
-      text: (result) ? 'Correcto!' : 'Incorrecto!'
+      backgroudColor: (result) ? '#42e2a8' : '#c83652',
+      text: (result) ? 'Correcto!' : 'Incorrecto!',
+      score: (result) ? (this.state.score + 1) : this.state.score,
+      lifes: (result) ? this.state.lifes : (this.state.lifes - 1)
     });
   }
 
   render() {
-    //incluir arriba la cantidad de vidas
     return (
       <View style={styles.container}>
         <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible}>
@@ -85,12 +80,9 @@ export default class Question extends Component {
         <RenderAnswerd answerd='SOLAR' bgcolor='#2682b4' _onPressButton={()=>this._onPressButton(false)}/>
         <RenderAnswerd answerd='EÓLICA' bgcolor='#2682c4' _onPressButton={()=>this._onPressButton(false)}/> 
         <RenderAnswerd answerd='NUCLEAR' bgcolor='#2682d4' _onPressButton={()=>this._onPressButton(true)}/> 
-        <View>
-          <Text>{this._getPoints()} PUNTOS</Text>
-        </View>
+        <BoardCounter score={this.state.score} lifes={this.state.lifes}/>
       </View>
     );
-    //incluir abajo el puntaje total
   }
 }
 
@@ -120,4 +112,27 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  counterContainer: {
+    height: 80,
+    width: 80,
+    borderWidth: 2,
+    borderColor: '#cccccc',
+    borderRadius: 40,
+    backgroundColor: 'blue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    shadowColor: 'rgba(0,0,0,1)',
+    shadowOffset: {
+      width: 1,
+      height: 1
+    },
+    shadowRadius: 1,
+    shadowOpacity: 0.5
+  },
+  counterText: {
+    fontSize: 20,
+    width: 70,
+    textAlign: 'center',
+    color: '#ffffff'
+  }
 });
