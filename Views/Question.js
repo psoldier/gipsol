@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Alert, AsyncStorage, Modal, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { connect } from 'react-redux'
+
+import { actionCreators } from '../reducer/reducer'
 
 class RenderQuestion extends Component {
   render() {
@@ -37,13 +40,14 @@ class BoardCounter extends Component {
   }
 }
 
-export default class Question extends Component {
+const mapStateToProps = (state, ownProps) => ({
+  category: state.categories.filter(function(category) { return category.id == ownProps.id })[0],
+})
+class Question extends Component {
   state = {
     modalVisible: false,
     backgroudColor: '#41D01D',
     text: '',
-    score: 0,
-    lifes: 3
   }
 
   _hideModalVisible(){
@@ -53,12 +57,17 @@ export default class Question extends Component {
   }
 
  _onPressButton(result){
+    const {dispatch} = this.props
+
+    if(result){
+      dispatch(actionCreators.add(this.props.category));
+    }else{
+      dispatch(actionCreators.remove(this.props.category));
+    }
     this.setState({
       modalVisible: true,
       backgroudColor: (result) ? '#42e2a8' : '#c83652',
       text: (result) ? 'Correcto!' : 'Incorrecto!',
-      score: (result) ? (this.state.score + 1) : this.state.score,
-      lifes: (result) ? this.state.lifes : (this.state.lifes - 1)
     });
   }
 
@@ -80,11 +89,12 @@ export default class Question extends Component {
         <RenderAnswerd answerd='SOLAR' bgcolor='#2682b4' _onPressButton={()=>this._onPressButton(false)}/>
         <RenderAnswerd answerd='EÓLICA' bgcolor='#2682c4' _onPressButton={()=>this._onPressButton(false)}/> 
         <RenderAnswerd answerd='NUCLEAR' bgcolor='#2682d4' _onPressButton={()=>this._onPressButton(true)}/> 
-        <BoardCounter score={this.state.score} lifes={this.state.lifes}/>
+        <BoardCounter score={this.props.category.score} lifes={this.props.category.lifes}/>
       </View>
     );
   }
 }
+export default connect(mapStateToProps)(Question)
 
 const styles = StyleSheet.create({
   container: {

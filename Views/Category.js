@@ -2,13 +2,19 @@ import React, { Component } from 'react';
 import { StyleSheet, Dimensions, Platform, Text, TouchableHighlight, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import Carousel from 'react-native-snap-carousel';
+import { connect } from 'react-redux'
 
-export default class Category extends Component {
+const mapStateToProps = (state) => ({
+  categories: state.categories,
+})
+
+class Category extends Component {
   render () {
-    const slides = [{title: 'Energías Renovables'},{title: 'Transporte'}].map((entry, index) => {
+    const {categories} = this.props
+    const slides = categories.map((category) => {
       return (
-        <TouchableHighlight key={`entry-${index}`} style={styles.carousel} onPress={()=>Actions.Question({ title: entry.title })} underlayColor="slateblue">
-          <Text>{ entry.title }</Text>
+        <TouchableHighlight key={`category-${category.id}`} style={styles.carousel} onPress={()=>Actions.Question(category)} underlayColor="slateblue">
+          <Text>{ category.title } || { category.score } || { category.lifes }</Text>
         </TouchableHighlight>
       );
     });
@@ -20,6 +26,7 @@ export default class Category extends Component {
     );
   }
 }
+export default connect(mapStateToProps)(Category)
 
 const { width: viewportWidth, height: viewportHeight } = Dimensions.get('window');
 
