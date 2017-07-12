@@ -14,7 +14,9 @@ class Category extends Component {
     const slides = categories.map((category) => {
       return (
         <TouchableHighlight key={`category-${category.id}`} style={styles.carousel} onPress={()=>Actions.Question(category)} underlayColor="slateblue">
-          <Text>{ category.title } || { category.score } || { category.lifes }</Text>
+          <Text>
+            { category.title } || Puntaje: { category.score } || Vidas: { category.lifes } || Maximo Historico: { category.maxScore }
+          </Text>
         </TouchableHighlight>
       );
     });

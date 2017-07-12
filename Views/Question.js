@@ -25,16 +25,11 @@ class RenderAnswerd extends Component {
   }
 }
 
-class BoardCounter extends Component {
+class ViewCounter extends Component {
   render() {
     return(
       <View>
-        <View style={styles.counterContainer}>
-          <Text style={styles.counterText}>{this.props.score}</Text>
-        </View>
-        <View style={styles.counterContainer}>
-          <Text style={styles.counterText}>{this.props.lifes}</Text>
-        </View>
+        <Text>Puntaje: { this.props.score } || Vidas: { this.props.lifes }</Text>
       </View>
     );
   }
@@ -72,6 +67,12 @@ class Question extends Component {
   }
 
   render() {
+    const options = this.props.category.questions.find(q => q.id == this.props.category.question_id).options.map((option) => {
+      return (
+        <RenderAnswerd key={`answerd-${option.id}`} answerd={ option.text } bgcolor='#2682a4' _onPressButton={()=>this._onPressButton(option.value)}/> 
+      )
+    });
+    const questionText = this.props.category.questions.find(q => q.id == this.props.category.question_id).question;
     return (
       <View style={styles.container}>
         <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible}>
@@ -84,12 +85,9 @@ class Question extends Component {
             </TouchableHighlight>
           </View>
         </Modal>
-        <RenderQuestion question='¿Cuál de las siguientes fuentes de energías no es renovable?'/> 
-        <RenderAnswerd answerd='HIDRÁULICA' bgcolor='#2682a4' _onPressButton={()=>this._onPressButton(false)}/> 
-        <RenderAnswerd answerd='SOLAR' bgcolor='#2682b4' _onPressButton={()=>this._onPressButton(false)}/>
-        <RenderAnswerd answerd='EÓLICA' bgcolor='#2682c4' _onPressButton={()=>this._onPressButton(false)}/> 
-        <RenderAnswerd answerd='NUCLEAR' bgcolor='#2682d4' _onPressButton={()=>this._onPressButton(true)}/> 
-        <BoardCounter score={this.props.category.score} lifes={this.props.category.lifes}/>
+        <RenderQuestion question={ questionText } />
+        { options }
+        <ViewCounter score={this.props.category.score} lifes={this.props.category.lifes}/>
       </View>
     );
   }
@@ -122,27 +120,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
-  counterContainer: {
-    height: 80,
-    width: 80,
-    borderWidth: 2,
-    borderColor: '#cccccc',
-    borderRadius: 40,
-    backgroundColor: 'blue',
-    justifyContent: 'center',
-    alignItems: 'center',
-    shadowColor: 'rgba(0,0,0,1)',
-    shadowOffset: {
-      width: 1,
-      height: 1
-    },
-    shadowRadius: 1,
-    shadowOpacity: 0.5
-  },
-  counterText: {
-    fontSize: 20,
-    width: 70,
-    textAlign: 'center',
-    color: '#ffffff'
-  }
 });

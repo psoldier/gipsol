@@ -22,20 +22,39 @@ const initialState = {
       title: 'Energías Renovables',
       score: 0,
       lifes: 3,
-      //listado de preguntas
-      //id_ultima pregunta preguntada
+      maxScore: 0,
+      questions: [
+        {
+          id: 1,
+          question: '¿Cuál de las siguientes fuentes de energías no es renovable?',
+          options:[{id: 1, text: 'HIDRÁULICA', value: false},{id: 2, text: 'SOLAR',value: false},{id: 3, text: 'EÓLICA',value: false},{id: 4, text: 'PETROLEO',value: true}]
+        },
+        {
+          id: 2,
+          question: '¿Qué elemento es el mayor generador de energía eólica?',
+          options:[{id: 1, text: 'ESPEJOS', value: false},{id: 2, text: 'MOLINOS',value: true},{id: 3, text: 'VOLCANES',value: false},{id: 4, text: 'SPINNERS',value: false}]
+        },
+        {
+          id: 3,
+          question: '¿En que sector se consume más energía?',
+          options:[{id: 1, text: 'SECTOR TRANSPORTE', value: false},{id: 2, text: 'SECTOR INDUSTRIAL',value: true},{id: 3, text: 'SECTOR DOMÉSTICO',value: false},{id: 4, text: 'SECTOR CREATIVO',value: false}]
+        }
+      ],
+      question_id: 1
     },
     {
       id: 2,
       title: 'Transporte',
       score: 0,
       lifes: 3,
+      maxScore: 0,
     },
     {
       id: 3,
       title: 'Test',
       score: 0,
       lifes: 3,
+      maxScore: 0,
     }
   ],
 }
@@ -50,22 +69,33 @@ const initialState = {
 export const reducer = (state = initialState, action) => {
   const {categories} = state
   const {type, payload} = action
-//
+
   switch (action.type) {
   case types.ADD: {
     return {
       ...state,
       categories: state.categories.map(category => category.id === payload.id ? 
-        { ...category, score: category.score + 1 } : category
+        { ...category, score: category.score + 1, question_id: category.question_id + 1 } : category
       )
     }
   }
   case types.REMOVE: {
+    console.log(state.categories);
     return {
       ...state,
-      categories: state.categories.map(category => category.id === payload.id ? 
-        { ...category, lifes: category.lifes - 1 } : category
-      )
+      categories: state.categories.map((category)=>{
+        if(category.id === payload.id){
+          if (category.lifes == 0){
+            category.maxScore = category.maxScore < category.score ? category.score : category.maxScore;
+            category.lifes = 3;
+            category.score = 0;
+          }else{
+            category.lifes = category.lifes - 1;
+          }
+        }
+        category.question_id = category.question_id + 1;
+        return category
+      })
     }
   }
   default:
