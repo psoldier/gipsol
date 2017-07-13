@@ -57,6 +57,8 @@ class Question extends Component {
     if(result){
       dispatch(actionCreators.add(this.props.category));
     }else{
+      if(this.props.category.lifes == 0)
+        Actions.pop();
       dispatch(actionCreators.remove(this.props.category));
     }
     this.setState({
@@ -76,14 +78,11 @@ class Question extends Component {
     return (
       <View style={styles.container}>
         <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible}>
-          <View style={[styles.modalContainer,{backgroundColor: this.state.backgroudColor}]}>
+          <TouchableHighlight onPress={()=>this._hideModalVisible()} style={[styles.modalContainer,{backgroundColor: this.state.backgroudColor}]}>
             <Text style={styles.titleText}>
               {this.state.text}
             </Text>
-            <TouchableHighlight onPress={()=>this._hideModalVisible()}>
-              <Text>Siguiente</Text>
-            </TouchableHighlight>
-          </View>
+          </TouchableHighlight>
         </Modal>
         <RenderQuestion question={ questionText } />
         { options }

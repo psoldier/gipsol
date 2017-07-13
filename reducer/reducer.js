@@ -37,7 +37,12 @@ const initialState = {
         {
           id: 3,
           question: '¿En que sector se consume más energía?',
-          options:[{id: 1, text: 'SECTOR TRANSPORTE', value: false},{id: 2, text: 'SECTOR INDUSTRIAL',value: true},{id: 3, text: 'SECTOR DOMÉSTICO',value: false},{id: 4, text: 'SECTOR CREATIVO',value: false}]
+          options:[{id: 1, text: 'SECTOR TRANSPORTE', value: true},{id: 2, text: 'SECTOR INDUSTRIAL',value: false},{id: 3, text: 'SECTOR DOMÉSTICO',value: false},{id: 4, text: 'SECTOR CREATIVO',value: false}]
+        },
+        {
+          id: 4,
+          question: 'Petróleo, carbón, uranio, sol y viento, son...',
+          options:[{id: 1, text: 'FUENTES DE ENERGÍAS', value: true},{id: 2, text: 'ENERGÍAS',value: false},{id: 3, text: 'FUERZAS',value: false},{id: 4, text: 'INVENTOS HUMANOS',value: false}]
         }
       ],
       question_id: 1
@@ -48,6 +53,14 @@ const initialState = {
       score: 0,
       lifes: 3,
       maxScore: 0,
+      questions: [
+        {
+          id: 1,
+          question: '¿Super o Premium?',
+          options:[{id: 1, text: 'SUPER', value: false},{id: 2, text: 'PREMIUM',value: false},{id: 3, text: 'INFINIA',value: false},{id: 4, text: 'POWERADE',value: true}]
+        }
+      ],
+      question_id: 1
     },
     {
       id: 3,
@@ -55,6 +68,14 @@ const initialState = {
       score: 0,
       lifes: 3,
       maxScore: 0,
+      questions: [
+        {
+          id: 1,
+          question: '¿Mejor equipo de futbol?',
+          options:[{id: 1, text: 'BOCA', value: false},{id: 2, text: 'LOBO',value: true},{id: 3, text: 'PINCHA',value: false},{id: 4, text: 'RIBER',value: false}]
+        }
+      ],
+      question_id: 1
     }
   ],
 }
@@ -75,12 +96,11 @@ export const reducer = (state = initialState, action) => {
     return {
       ...state,
       categories: state.categories.map(category => category.id === payload.id ? 
-        { ...category, score: category.score + 1, question_id: category.question_id + 1 } : category
+        { ...category, score: category.score + 1, question_id: (category.questions.length == category.question_id ? 1 : category.question_id + 1) } : category
       )
     }
   }
   case types.REMOVE: {
-    console.log(state.categories);
     return {
       ...state,
       categories: state.categories.map((category)=>{
@@ -92,8 +112,8 @@ export const reducer = (state = initialState, action) => {
           }else{
             category.lifes = category.lifes - 1;
           }
+        category.question_id = (category.questions.length == category.question_id ? 1 : category.question_id + 1);
         }
-        category.question_id = category.question_id + 1;
         return category
       })
     }

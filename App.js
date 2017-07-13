@@ -5,7 +5,6 @@ import { createStore } from 'redux'
 
 import { reducer } from './reducer/reducer'
 const store = createStore(reducer)
-//import { actionCreators } from './reducer/reducer'
 
 import Home from './Views/Home';
 import Category from './Views/Category';
