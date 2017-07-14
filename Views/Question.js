@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import { Alert, AsyncStorage, Modal, StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux'
-
 import { actionCreators } from '../reducer/reducer'
+
 
 class RenderQuestion extends Component {
   render() {
