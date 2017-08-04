@@ -26,10 +26,17 @@ class RenderAnswerd extends Component {
 }
 
 class ViewCounter extends Component {
+          //<Text style={styles.pointText}>Puntaje: { this.props.score }</Text>
+          //<Text style={styles.lifeText}>Vidas: { this.props.lifes }</Text>
   render() {
     return(
-      <View>
-        <Text>Puntaje: { this.props.score } || Vidas: { this.props.lifes }</Text>
+      <View style={styles.counter}>
+        <View style={styles.stadistics} >
+          <Text style={styles.pointText}>Puntaje: { this.props.score }</Text>
+        </View>
+        <View style={styles.stadistics} >
+          <Text style={styles.lifeText}>Vidas: { this.props.lifes }</Text>
+        </View>
       </View>
     );
   }
@@ -41,7 +48,7 @@ const mapStateToProps = (state, ownProps) => ({
 class Question extends Component {
   state = {
     modalVisible: false,
-    backgroudColor: '#41D01D',
+    backgroundColor: '#41D01D',
     text: '',
   }
 
@@ -63,7 +70,7 @@ class Question extends Component {
     }
     this.setState({
       modalVisible: true,
-      backgroudColor: (result) ? '#42e2a8' : '#c83652',
+      backgroundColor: (result) ? '#42e2a8' : '#c83652',
       text: (result) ? 'Correcto!' : 'Incorrecto!',
     });
   }
@@ -78,7 +85,7 @@ class Question extends Component {
     return (
       <View style={styles.container}>
         <Modal animationType={"slide"} transparent={false} visible={this.state.modalVisible}>
-          <TouchableHighlight onPress={()=>this._hideModalVisible()} style={[styles.modalContainer,{backgroundColor: this.state.backgroudColor}]}>
+          <TouchableHighlight onPress={()=>this._hideModalVisible()} style={[styles.modalContainer,{backgroundColor: this.state.backgroundColor}]}>
             <Text style={styles.titleText}>
               {this.state.text}
             </Text>
@@ -119,4 +126,26 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  counter:{
+    flex: 0.3,
+    flexDirection: 'row'
+  },
+  stadistics:{
+    flex: 1,
+    flexDirection: 'row'
+  },
+  pointText:{
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#2682a4',
+    textAlign: 'left',
+    fontSize: 18
+  },
+  lifeText:{
+    flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#2682a4',
+    textAlign: 'right',
+    fontSize: 18
+  }
 });

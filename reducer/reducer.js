@@ -48,7 +48,7 @@ export const reducer = (state = initialState, action) => {
         if(category.id === payload.id){
           if (category.lifes == 0){
             category.maxScore = category.maxScore < category.score ? category.score : category.maxScore;
-            category.lifes = 3;
+            category.lifes = 2;
             category.score = 0;
           }else{
             category.lifes = category.lifes - 1;

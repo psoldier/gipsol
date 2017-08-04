@@ -1,5 +1,15 @@
 {
   "expo": {
-    "sdkVersion": "17.0.0"
+    "name": "Gipsol",
+    "icon": "./icon.png",
+    "version": "1.0.0",
+    "slug": "gipsol",
+    "sdkVersion": "17.0.0",
+    "ios": {
+      "bundleIdentifier": "com.psoldier.gipsol"
+    },
+    "android": {
+      "package": "com.psoldier.gipsol"
+    }
   }
 }
